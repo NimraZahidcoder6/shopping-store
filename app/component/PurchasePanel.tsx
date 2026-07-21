@@ -25,7 +25,7 @@ export default function PurchasePanel({ product }: { product: Product }) {
 function handleAdd() {
   if (!selected) return;
   addItem(product, selected, quantity);
-  showToast(`Added to bag — ${product.name} (${selected} × ${quantity})`);
+
   setAdded(true);
   window.setTimeout(() => setAdded(false), 2500);
 }
