@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
-import { useToast } from "@/lib/toast-context";
+
 
 const SIZE_CHART = [
   { size: "XS", chest: "32-34", waist: "26-28", length: "26" },
@@ -15,7 +15,6 @@ const SIZE_CHART = [
 
 export default function PurchasePanel({ product }: { product: Product }) {
   const { addItem } = useCart();
-  const { showToast } = useToast(); 
   const [selected, setSelected] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
@@ -23,12 +22,13 @@ export default function PurchasePanel({ product }: { product: Product }) {
 
   const subtotal = product.price * quantity;
 
-  function handleAdd() {
-    if (!selected) return;
-    addItem(product, selected, quantity);
-    setAdded(true);
-    window.setTimeout(() => setAdded(false), 2500);
-  }
+function handleAdd() {
+  if (!selected) return;
+  addItem(product, selected, quantity);
+
+  setAdded(true);
+  window.setTimeout(() => setAdded(false), 2500);
+}
 
   function changeQuantity(delta: number) {
     setQuantity((q) => Math.max(1, q + delta));
@@ -107,7 +107,7 @@ export default function PurchasePanel({ product }: { product: Product }) {
 
       {showSizeGuide && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/60 p-4"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-ink/60 p-4"
           onClick={() => setShowSizeGuide(false)}
         >
           <div
@@ -130,7 +130,7 @@ export default function PurchasePanel({ product }: { product: Product }) {
               Find your fit.
             </h3>
             <p className="mt-2 text-sm text-ink-soft">
-              All measurements in inches. Check it out for your perfect size
+              All measurements in inches. Check it out for your perfect size.
             </p>
 
             <table className="mt-5 w-full border-collapse font-mono text-xs">
